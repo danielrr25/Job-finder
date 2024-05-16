@@ -1,0 +1,102 @@
+/* src/styles.css */
+body {
+    font-family: 'Arial', sans-serif;
+    background-color: #f4f4f4;
+    margin: 0;
+    padding: 0;
+  }
+  
+  .header {
+    background-color: #282c34;
+    color: white;
+    padding: 20px 0;
+    text-align: center;
+  }
+  
+  .hero {
+    background-color: #0073e6;
+    padding: 60px 20px;
+    color: white;
+    text-align: center;
+  }
+  
+  .hero h1 {
+    margin: 0;
+    font-size: 3em;
+  }
+  
+  .hero p {
+    font-size: 1.2em;
+  }
+  
+  .search-container {
+    width: 100%;
+    padding: 20px;
+    box-sizing: border-box;
+    background-color: #fff;
+    display: flex;
+    justify-content: center;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    margin-top: -20px; /* Overlap the hero section */
+    z-index: 1;
+    position: relative;
+  }
+  
+  .search-bar {
+    width: 100%;
+    max-width: 800px;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+  }
+  
+  .container {
+    width: 100%;
+    max-width: 1200px;
+    margin: 20px auto;
+    padding: 20px;
+    background: #fff;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+  }
+  
+  .job-item {
+    border-bottom: 1px solid #ddd;
+    padding: 15px 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  
+  .job-item h2 {
+    margin: 0 0 10px;
+    font-size: 1.5em;
+    color: #0073e6;
+  }
+  
+  .job-item p {
+    margin: 5px 0;
+    color: #666;
+  }
+  
+  .job-details {
+    flex: 1;
+  }
+  
+  .job-apply {
+    text-align: right;
+  }
+  
+  .job-apply button {
+    background-color: #0073e6;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+  }
+  
+  .job-apply button:hover {
+    background-color: #005bb5;
+  }
+  
