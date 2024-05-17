@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import './index.css'; 
+import './index.css';
 import Header from './components/Header';
 import Hero from './components/Hero';
 import JobList from './components/JobList';
@@ -14,6 +14,7 @@ const App = () => {
     const fetchJobs = async () => {
       try {
         const response = await axios.get('http://localhost:5001/scrape-jobs');
+        console.log(response.data);
         setJobList(response.data);
       } catch (error) {
         console.error('Error fetching jobs:', error);
@@ -24,7 +25,7 @@ const App = () => {
   }, []);
 
   const filteredJobs = jobList.filter((job) =>
-    job.title.toLowerCase().includes(searchTerm.toLowerCase())
+    job.toLowerCase().includes(searchTerm.toLowerCase())
   );
 
   return (

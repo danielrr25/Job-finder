@@ -1,9 +1,13 @@
 const express = require('express');
 const puppeteer = require('puppeteer');
 const UserAgent = require('user-agents');
+const cors = require('cors');
 
 const app = express();
 const PORT = 5001;
+
+// Enable CORS for all routes
+app.use(cors());
 
 const delay = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
 
@@ -16,21 +20,19 @@ const scrapeJobs = async () => {
 
   await page.goto('https://us.jora.com');
 
-  //navigate to jobs in orlando
+  // Navigate to jobs in Orlando
   await page.waitForSelector('#q');
   await page.type('#q', 'software engineer');
 
   await page.waitForSelector('#l');
-  await page.type('#l', 'Orlando, Fl');
+  await page.type('#l', 'Orlando, FL');
 
-  // Ensure the submit button is in 
   const submitButtonSelector = '.search-jobs-button.rounded-button.-primary.-size-lg.-w-full.-mb-4';
   await page.waitForSelector(submitButtonSelector);
   await page.evaluate((selector) => {
     document.querySelector(selector).scrollIntoView();
   }, submitButtonSelector);
 
-  // Click the submit button and wait for navigation to complete
   await Promise.all([
     page.click(submitButtonSelector), // Click the submit button
     page.waitForNavigation({ waitUntil: 'networkidle0' }), // Wait for the navigation to complete
@@ -38,26 +40,20 @@ const scrapeJobs = async () => {
 
   console.log('Search form submitted');
 
-  // grab jobs
-  //   await page.waitForSelector('.jobresults'); 
+  // Grab jobs
   await page.waitForSelector('.job-title.heading-large');
-  
-  const allJobs = await page.evaluate(() => {
 
-    // const jobs = document.querySelectorAll("body > main > div > div:nth-child(3) > section > div > div.tab-panels > div.tab-panel.active > div > a")
-    // const jobs = document.querySelectorAll("#jobresults > .job-card result organic-job")
-    const jobs = document.querySelectorAll(".job-title.heading-large a");
+  const allJobs = await page.evaluate(() => {
+    const jobs = document.querySelectorAll('.job-title.heading-large a');
     const jobTitles = [];
 
     jobs.forEach(jobElement => {
-        // const jobTitle = jobElement.getAttribute('inner');
-        // jobTitles.push(jobElement.innerHTML);
-        jobTitles.push(jobElement.textContent.trim());
-      });
+      jobTitles.push(jobElement.textContent.trim());
+    });
 
-    return jobTitles;
+    // Remove duplicates
+    return [...new Set(jobTitles)];
   });
-  
 
   console.log(allJobs)
   await browser.close();
